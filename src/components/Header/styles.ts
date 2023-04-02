@@ -14,6 +14,15 @@ export const HeaderContainer = styled.header`
   align-items: center;
   justify-content: center;
 
+  // NOTE - para o Header ficar preso
+  position: sticky;
+
+  top: 0;
+  left: 0;
+
+  // NOTE - para ficar acima de tudo
+  z-index: 5;
+
   > div {
     width: 100%;
     
