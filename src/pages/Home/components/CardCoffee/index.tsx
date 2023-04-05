@@ -6,7 +6,7 @@ import { ShoppingCart } from "phosphor-react"
 
 import { QuantityInput } from "../../../../components/QuantityInput"
 
-interface ICoffee  {
+interface ICoffee {
   id: number,
   tags: string[],
   name: string,
@@ -20,15 +20,15 @@ interface ICardCoffeeProps {
   coffee: ICoffee;
 }
 
-import { 
-  CardCoffeeContainer, 
-  DescriptionCoffee, 
-  CardCoffeeFooter, 
-  NameCoffee, 
-  Tags, 
-  CoffeeSignPrice, 
-  CoffeePrice, 
-  AddCartContainer 
+import {
+  CardCoffeeContainer,
+  DescriptionCoffee,
+  CardCoffeeFooter,
+  NameCoffee,
+  Tags,
+  CoffeeSignPrice,
+  CoffeePrice,
+  AddCartContainer
 } from "./styles";
 
 
@@ -54,7 +54,7 @@ const CardCoffee = ({ coffee }: ICardCoffeeProps) => {
       }
 
       return resultQuantity;
-      
+
     });
   }, []);
 
@@ -65,14 +65,14 @@ const CardCoffee = ({ coffee }: ICardCoffeeProps) => {
     }
 
     addCoffeeToCart(coffeeData);
-  }, [quantity]);
+  }, [quantity, addCoffeeToCart]);
   // END FUNCTION
 
   return (
     <CardCoffeeContainer>
-      <img 
-        src={`/coffees/${coffee.photo}`} 
-        alt="" 
+      <img
+        src={`/coffees/${coffee.photo}`}
+        alt=""
       />
 
       <Tags>
@@ -102,7 +102,7 @@ const CardCoffee = ({ coffee }: ICardCoffeeProps) => {
             onDecreaseQuantity={handleDecreaseQuantity}
           />
 
-          <button onClick={() => { 
+          <button onClick={() => {
             handleAddCoffeeToCart(coffee)
           }}>
             <ShoppingCart size={22} weight="fill" />

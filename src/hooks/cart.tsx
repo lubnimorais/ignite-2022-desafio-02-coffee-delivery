@@ -2,7 +2,7 @@ import { ReactNode, createContext, useCallback, useContext, useState } from "rea
 
 import { produce } from 'immer';
 
-interface ICoffee  {
+interface ICoffee {
   id: number,
   tags: string[],
   name: string,
@@ -26,23 +26,24 @@ const CartContext = createContext({} as ICartContextData);
 
 const CartProvider = ({ children }: ICartProviderProps) => {
   const [items, setItems] = useState<ICoffee[]>([]);
-  console.log("🚀 ~ file: cart.tsx:29 ~ CartProvider ~ items:", items)
 
   // FUNCTIONS
   const addCoffeeToCart = useCallback((coffee: ICoffee) => {
-    const coffeeAlreadyAddedInCartIndex = items.findIndex(item => item.id === coffee.id);
+    const itemCartIndex = items.findIndex(item => item.id === coffee.id);
 
     const newItemCart = produce(items, draft => {
-      if (coffeeAlreadyAddedInCartIndex < 0) {
+      if (itemCartIndex < 0) {
         draft.push(coffee);
       } else {
-        // TODO - refer lógica
-        draft[coffeeAlreadyAddedInCartIndex].quantity += coffee.quantity;
+        const currentQuantity = draft[itemCartIndex].quantity;
+        const newQuantity = currentQuantity + coffee.quantity;
+
+        draft[itemCartIndex].quantity = newQuantity;
       }
     });
 
     setItems(newItemCart);
-  }, [])
+  }, [items])
   // END FUNCTIONS
 
   return (
