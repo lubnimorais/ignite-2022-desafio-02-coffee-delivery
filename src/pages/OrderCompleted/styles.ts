@@ -31,6 +31,14 @@ export const Text = styled.p`
   line-height: 130%;
 `;
 
+export const TextTopic = styled.p`
+  font-size: ${({ theme }) => theme.textSizes[`text-regular-m`]};
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors[`base-text`]};
+  
+  line-height: 130%;
+`;
+
 export const OrderDetailContainer = styled.div`
   min-width: 32rem;
 

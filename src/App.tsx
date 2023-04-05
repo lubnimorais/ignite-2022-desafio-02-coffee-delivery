@@ -2,17 +2,23 @@ import { ThemeProvider } from "styled-components"
 
 import { BrowserRouter } from "react-router-dom"
 
+import { CartProvider } from "./hooks/cart"
+
 import {defaultTheme} from './styles/theme/default'
 import { GlobalStyle } from "./styles/global"
+
 import { Router } from "./routes"
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle />
+      
       <BrowserRouter>
-        <GlobalStyle />
+        <CartProvider>
 
-        <Router />
+          <Router />
+        </CartProvider>
       </BrowserRouter>
     </ThemeProvider>
   )

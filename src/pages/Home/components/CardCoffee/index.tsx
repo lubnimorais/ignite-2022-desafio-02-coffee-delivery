@@ -1,3 +1,7 @@
+import { useCallback, useState } from "react";
+
+import { useCart } from "../../../../hooks/cart";
+
 import { ShoppingCart } from "phosphor-react"
 
 import { QuantityInput } from "../../../../components/QuantityInput"
@@ -25,12 +29,44 @@ import {
   CoffeeSignPrice, 
   CoffeePrice, 
   AddCartContainer 
-} from "./styles"
+} from "./styles";
 
 
 
 const CardCoffee = ({ coffee }: ICardCoffeeProps) => {
-  console.log(coffee.photo);
+  const { addCoffeeToCart } = useCart();
+
+  // STATES
+  const [quantity, setQuantity] = useState(1);
+  // END STATES
+
+  // FUNCTION
+  const handleIncreaseQuantity = useCallback(() => {
+    setQuantity(oldState => oldState + 1);
+  }, []);
+
+  const handleDecreaseQuantity = useCallback(() => {
+    setQuantity(oldState => {
+      const resultQuantity = oldState - 1;
+
+      if (resultQuantity === 0) {
+        return 1;
+      }
+
+      return resultQuantity;
+      
+    });
+  }, []);
+
+  const handleAddCoffeeToCart = useCallback((coffee: ICoffee) => {
+    const coffeeData = {
+      ...coffee,
+      quantity,
+    }
+
+    addCoffeeToCart(coffeeData);
+  }, [quantity]);
+  // END FUNCTION
 
   return (
     <CardCoffeeContainer>
@@ -60,9 +96,15 @@ const CardCoffee = ({ coffee }: ICardCoffeeProps) => {
         </div>
 
         <AddCartContainer>
-          <QuantityInput  />
+          <QuantityInput
+            quantity={quantity}
+            onIncreaseQuantity={handleIncreaseQuantity}
+            onDecreaseQuantity={handleDecreaseQuantity}
+          />
 
-          <button>
+          <button onClick={() => { 
+            handleAddCoffeeToCart(coffee)
+          }}>
             <ShoppingCart size={22} weight="fill" />
           </button>
         </AddCartContainer>
