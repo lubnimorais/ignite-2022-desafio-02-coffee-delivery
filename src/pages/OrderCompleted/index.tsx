@@ -1,15 +1,37 @@
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import { useTheme } from 'styled-components';
 
 import { MapPin, Clock, CurrencyDollar } from 'phosphor-react';
 
-import deliverymanImg from '../../assets/deliveryman.svg';
-
+import { paymentMethod } from '../CompleteOrder/components/CompleteOrderForm/PaymentMethodOptions';
 import { Topic } from "../../components/Topic";
+
+import { OrderData } from '../CompleteOrder';
+
+import deliverymanImg from '../../assets/deliveryman.svg';
 
 import { OrderCompletedContainer, OrderDetailContainer, Text, TextTopic, Title } from "./styles";
 
+interface ILocationProps {
+  state: OrderData
+}
+
 const OrderCompleted = () => {
   const theme = useTheme();
+  const navigation = useNavigate();
+
+  const { state } = useLocation() as unknown as ILocationProps;
+
+  useEffect(() => {
+    if (!state) {
+      navigation('/')
+    }    
+  }, [navigation]);
+
+  // CASO NÃO TENHA O STATE
+  if (!state) return <></> 
 
   return (
     <OrderCompletedContainer>
@@ -30,9 +52,9 @@ const OrderCompleted = () => {
             iconColor={theme.colors['brand-purple']}
             text={
               <TextTopic>
-                Entrega em <strong>Rua de Teste da entrega, 102</strong>
+                Entrega em <strong>{`${state.street}, ${state.number}`}</strong>
                 <br />
-                Teste City - Caruaru, PE
+                {`${state.neighborhood} - ${state.city}, ${state.uf}`}
               </TextTopic>
             }
           />
@@ -56,7 +78,7 @@ const OrderCompleted = () => {
               <TextTopic>
                 Pagamento na entrega
                 <br />
-                <strong>Cartão de Crédito</strong>
+                <strong>{paymentMethod[state.paymentMethod].label}</strong>
               </TextTopic>
             }
           />

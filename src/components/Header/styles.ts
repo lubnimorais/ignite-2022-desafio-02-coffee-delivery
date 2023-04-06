@@ -59,10 +59,35 @@ export const HeaderButton = styled.button<HeaderButtonProps>`
 
   position: relative;
 
+  cursor: inherit;
+
+  span {
+    width: 1.25rem;
+    height: 1.25rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: calc(-1.25rem / 2);
+    right: calc(-1.25rem / 2);
+
+    border-radius: 50%;
+    
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: ${({ theme }) => theme.colors["base-white"]};
+  }
+
   ${({ variant, theme }) =>
     css`
       background: ${theme.colors[`brand-${variant}-light`]};
       color: ${theme.colors[`brand-${variant}-dark`]};
+
+      span {
+        background: ${({ theme }) => theme.colors[`brand-${variant}-dark`]};
+      }
     `
   }
 

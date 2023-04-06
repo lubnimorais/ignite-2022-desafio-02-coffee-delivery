@@ -1,9 +1,13 @@
+import { useCart } from "../../../../hooks/cart";
+
 import { CardCoffeeCart } from "../CardCoffeeCart"
 import { ConfirmationSection } from "./ConfirmationSection"
 
 import { DetailsContainer, SelectedCoffeesContainer, Title } from "./styles"
 
 const SelectedCoffees = () => {
+  const { items } = useCart();
+
   return (
     <SelectedCoffeesContainer>
       <Title>
@@ -11,9 +15,10 @@ const SelectedCoffees = () => {
       </Title>
 
       <DetailsContainer>
-        <CardCoffeeCart />
-        <CardCoffeeCart />
-        <CardCoffeeCart />
+        {items.map(item => (
+          <CardCoffeeCart key={item.id} coffee={item} />
+        ))}
+      
 
         <ConfirmationSection />
       </DetailsContainer>

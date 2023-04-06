@@ -1,12 +1,27 @@
-import { InputHTMLAttributes } from "react"
-import { InputContainer } from "./styles"
+import { InputHTMLAttributes, forwardRef, ForwardRefRenderFunction } from "react"
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {}
+import { ErrorText, InputContainer, InputField, InputWrapper, OptionText } from "./styles"
 
-const Input = ({ ...rest }: IInputProps) => {
-  return (
-    <InputContainer {...rest } />
+interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  error?: string;
+  optionText?: string;
+}
+
+const InputBase: ForwardRefRenderFunction<HTMLInputElement, IInputProps> = (
+  { error, optionText, className, ...rest }, ref) => {
+  
+    return (
+    <InputWrapper className={className}>
+      <InputContainer hasError={!!error}>
+        <InputField ref={ref} {...rest } />
+        {optionText && <OptionText>{optionText}</OptionText>}
+      </InputContainer>
+
+      {error && <ErrorText>{error}</ErrorText>}
+    </InputWrapper>
   )
 }
+
+const Input = forwardRef(InputBase);
 
 export { Input }
